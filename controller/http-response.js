@@ -1,5 +1,5 @@
-const success = (message, data) => {
-    return { message: message ? message : "ok", data }
+const success = (data, message) => {
+    return { message: message ? message : "ok", result: data }
 };
 
 const faild = (message) => {

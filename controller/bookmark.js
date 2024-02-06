@@ -56,23 +56,7 @@ bookmarkRouter.post('/init', (req, res) => {
 
 bookmarkRouter.get('/', (req, res) => {
     req.db.all("SELECT * FROM bookmarks", [], (err, rows) => {
-        const tree = [];
-        const itemMap = {};
-
-        // 将每个项按照其 id 存储在一个对象中，方便后续通过 id 查找
-        rows.forEach(item => {
-            itemMap[item.id] = { ...item, children: [] };
-        });
-
-        // 将每个项连接到其父节点的 children 数组中
-        rows.forEach(item => {
-            if (item.parent_id !== null && itemMap[item.parent_id]) {
-                itemMap[item.parent_id].children.push(itemMap[item.id]);
-            } else {
-                tree.push(itemMap[item.id]);
-            }
-        });
-        res.send(httpResponse.success(tree))
+        res.send(httpResponse.success(rows))
     });
 })
 
